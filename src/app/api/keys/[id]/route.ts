@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Import the apiKeys array from a shared location
 // In a real application, this would be your database connection
@@ -11,7 +11,7 @@ declare var apiKeys: Array<{
 }>;
 
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -21,7 +21,7 @@ export async function DELETE(
     // For now, we'll just filter the array
     apiKeys = apiKeys.filter(key => key.id !== id);
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: `API key ${id} deleted` });
   } catch (error) {
     return NextResponse.json(
       { error: 'Failed to delete API key' },
